@@ -15,16 +15,23 @@ class ModelToolBackup extends Model {
 	public function getTables() {
 		$table_data = array();
 		
-		$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
-		
+		//$query = $this->db->query("SHOW TABLES FROM `" . DB_DATABASE . "`");
+		$sqlquery = sprintf("SELECT table_name as Tables_in_%s FROM information_schema.tables WHERE table_type = 'BASE TABLE' AND table_schema NOT IN ('pg_catalog', 'information_schema')", DB_DATABASE);
+
+		$query = $this->db->query($sqlquery);
+
 		foreach ($query->rows as $result) {
-			if (utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
-				if (isset($result['Tables_in_' . DB_DATABASE])) {
-					$table_data[] = $result['Tables_in_' . DB_DATABASE];
+//			if (utf8_substr($result['Tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+//				if (isset($result['Tables_in_' . DB_DATABASE])) {
+//					$table_data[] = $result['Tables_in_' . DB_DATABASE];
+			if (utf8_substr($result['tables_in_' . DB_DATABASE], 0, strlen(DB_PREFIX)) == DB_PREFIX) {
+				if (isset($result['tables_in_' . DB_DATABASE])) {
+					$table_data[] = $result['tables_in_' . DB_DATABASE];
+
 				}
 			}
 		}
-		
+
 		return $table_data;
 	}
 	

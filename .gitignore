@@ -1,5 +1,5 @@
 config.php
 admin/config.php
-system/cache
-system/log
+system/cache/
+system/logs/
 

@@ -106,7 +106,8 @@ class ModelSaleCustomer extends Model {
 		}
 		
 		$sort_data = array(
-			'name',
+			//'name',
+			'cgd.name',
 			'c.email',
 			'customer_group',
 			'c.status',
@@ -118,7 +119,8 @@ class ModelSaleCustomer extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
-			$sql .= " ORDER BY name";	
+			//$sql .= " ORDER BY name";	
+			$sql .= " ORDER BY cgd.name";	
 		}
 			
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
